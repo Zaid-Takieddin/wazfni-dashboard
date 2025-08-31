@@ -44,8 +44,8 @@ export function UserFiltersDrawer({ open, onClose, filters, onFiltersChange }: P
 
   const handleClearFilters = useCallback(() => {
     const clearedFilters: UserFilters = {
-      role: 'ALL',
-      isVerified: 'ALL',
+      role: undefined,
+      isVerified: undefined,
       search: '',
       page: 1,
       limit: 10,
@@ -98,7 +98,9 @@ export function UserFiltersDrawer({ open, onClose, filters, onFiltersChange }: P
           <InputLabel>Role</InputLabel>
           <Select
             value={localFilters.role || 'ALL'}
-            onChange={(e) => handleFilterChange('role', e.target.value)}
+            onChange={(e) =>
+              handleFilterChange('role', e.target.value === 'ALL' ? undefined : e.target.value)
+            }
             label="Role"
           >
             <MenuItem value="ALL">All Roles</MenuItem>
@@ -115,7 +117,7 @@ export function UserFiltersDrawer({ open, onClose, filters, onFiltersChange }: P
             value={localFilters.isVerified !== undefined ? String(localFilters.isVerified) : 'ALL'}
             onChange={(e) => {
               const value = e.target.value;
-              handleFilterChange('isVerified', value === 'ALL' ? 'ALL' : value === 'true');
+              handleFilterChange('isVerified', value === 'ALL' ? undefined : value === 'true');
             }}
             label="Verification Status"
           >

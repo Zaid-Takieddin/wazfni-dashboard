@@ -43,7 +43,7 @@ const schema = z.object({
   role: z.enum(['USER', 'ADMIN', 'COMPANY'], {
     errorMap: () => ({ message: 'Role is required' }),
   }),
-  isActive: z.boolean(),
+  isVerified: z.boolean(),
   password: z.string().optional(),
 });
 
@@ -67,7 +67,7 @@ export function UserEditDialog({ open, onClose, user }: Props) {
       email: '',
       phoneNumber: '',
       role: 'USER',
-      isActive: true,
+      isVerified: true,
       password: '',
     },
   });
@@ -88,7 +88,7 @@ export function UserEditDialog({ open, onClose, user }: Props) {
         email: user.email,
         phoneNumber: user.phoneNumber || '',
         role: user.role,
-        isActive: user.isVerified,
+        isVerified: user.isVerified,
         password: '',
       });
     }
@@ -111,7 +111,7 @@ export function UserEditDialog({ open, onClose, user }: Props) {
           email: data.email,
           phoneNumber: data.phoneNumber || undefined,
           role: data.role,
-          isActive: data.isActive,
+          isVerified: data.isVerified,
         };
 
         // Only include password if it's provided
@@ -210,18 +210,18 @@ export function UserEditDialog({ open, onClose, user }: Props) {
             <FormControlLabel
               control={
                 <Switch
-                  checked={watch('isActive')}
-                  onChange={(e) => methods.setValue('isActive', e.target.checked)}
+                  checked={watch('isVerified')}
+                  onChange={(e) => methods.setValue('isVerified', e.target.checked)}
                   color="primary"
                 />
               }
               label={
                 <Box>
                   <Typography variant="body2">
-                    {watch('isActive') ? 'Verified User' : 'Unverified User'}
+                    {watch('isVerified') ? 'Verified User' : 'Unverified User'}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    {watch('isActive')
+                    {watch('isVerified')
                       ? 'User has verified email and can access all features'
                       : 'User needs to verify email or admin approval'}
                   </Typography>
